@@ -89,6 +89,6 @@ jobs:
         uses: actions/upload-release-asset@v1.0.1
         with:
           upload_url: ${{ env.uploadUrl }}
-          asset_path: ./dist/${{ env.targetName }}.app
-          asset_name: ${{ env.targetName }}.app
+          asset_path: ./dist/${{ env.targetName }}.zip
+          asset_name: ${{ env.targetName }}.zip
           asset_content_type: application/applefile

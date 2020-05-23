@@ -16,3 +16,5 @@ venv/bin/pip install -r requirements.txt
 venv/bin/pip install -r requirements-dev.txt
 
 venv/bin/pyinstaller remover.spec --clean -y
+
+cd dist && zip -r Remover.zip Remover.app
