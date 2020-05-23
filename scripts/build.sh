@@ -2,13 +2,17 @@
 
 set -e
 
+if type virtualenv > /dev/null 2>&1; then
+  echo 'virtualenv...OK'
+else
+  pip3 install virtualenv
+fi
+
 if [ ! -d "venv" ]; then
   virtualenv venv
 fi
 
-source venv/bin/activate
+venv/bin/pip install -r requirements.txt
+venv/bin/pip install -r requirements-dev.txt
 
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
-
-pyinstaller remover.spec --clean -y
+venv/bin/pyinstaller remover.spec --clean -y
