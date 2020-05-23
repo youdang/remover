@@ -1,0 +1,13 @@
+# General
+.DS_Store
+
+# PyCharm
+.idea/
+
+# PyInstaller
+build/
+dist/
+
+# Virtualenv & Python
+*.pyc
+venv/
