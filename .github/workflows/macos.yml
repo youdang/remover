@@ -15,13 +15,15 @@ jobs:
     env:
       targetName: Remover
     steps:
-      - name: checkout
+      - name: Checkout
+        if: startsWith(github.event.ref, 'refs/tags/')
         uses: actions/checkout@v1
         with:
           fetch-depth: 1
-      - name: build
+      - name: Build & Package
+        if: startsWith(github.event.ref, 'refs/tags/')
         run: ./scripts/build.sh
-      - name: queryRelease
+      - name: Query Release
         id: queryRelease
         if: startsWith(github.event.ref, 'refs/tags/')
         shell: pwsh
@@ -47,7 +49,7 @@ jobs:
             # 没查到，输出
             echo "::set-output name=needCreateRelease::true"
           }
-      - name: createRelease
+      - name: Create Release
         id: createRelease
         if: startsWith(github.event.ref, 'refs/tags/') && steps.queryRelease.outputs.needCreateRelease == 'true'
         env:
@@ -59,7 +61,7 @@ jobs:
           body:
           draft: false
           prerelease: false
-      - name: getLatestTagRelease
+      - name: Query Latest Tag Release
         if: startsWith(github.event.ref, 'refs/tags/')
         shell: pwsh
         env:
@@ -79,7 +81,7 @@ jobs:
           Write-Host 'latestUpUrl:'$latestUpUrl
           echo "::set-env name=uploadUrl::$latestUpUrl"
           Write-Host 'env uploadUrl:'${env:uploadUrl}
-      - name: upload release
+      - name: Upload Release
         id: uploadRelease
         if: startsWith(github.event.ref, 'refs/tags/')
         env:
